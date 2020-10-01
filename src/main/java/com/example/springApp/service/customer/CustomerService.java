@@ -1,8 +1,8 @@
-package com.example.springApp.service;
+package com.example.springApp.service.customer;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-import com.example.springApp.model.Customer;
+import com.example.springApp.domain.Customer;
 
 @Service
 public interface CustomerService {

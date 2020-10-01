@@ -1,4 +1,4 @@
-package com.example.springApp.model;
+package com.example.springApp.domain;
 
 import java.io.Serializable;
 import javax.persistence.Entity;

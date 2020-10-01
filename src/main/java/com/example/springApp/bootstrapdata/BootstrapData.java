@@ -3,7 +3,7 @@ package com.example.springApp.bootstrapdata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import com.example.springApp.model.Customer;
+import com.example.springApp.domain.Customer;
 import com.example.springApp.repository.CustomerRepository;
 
 @Component

@@ -1,12 +1,13 @@
 package com.example.springApp.controller;
 
 import java.util.List;
-import com.example.springApp.service.CustomerServiceFacade;
+import com.example.springApp.service.customer.facade.CustomerFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.springApp.model.Customer;
+import com.example.springApp.domain.Customer;
 import org.springframework.http.HttpStatus;
+import javax.validation.constraints.Min;
 
 @RestController
 @RequestMapping(CustomerController.BASE_URL)
@@ -15,7 +16,7 @@ public class CustomerController {
     public static final String BASE_URL = "/api/v1/customers";
 
     @Autowired
-    CustomerServiceFacade customerServiceFacade;
+    CustomerFacade customerServiceFacade;
     
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
@@ -28,7 +29,8 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> findCustomerById(@PathVariable Long id) {
+    public ResponseEntity<Customer> findCustomerById(@PathVariable
+                                                     @Min(value = 1, message = "Invalid id!") Long id) {
         return new ResponseEntity<>(customerServiceFacade.findCustomerById(id), HttpStatus.FOUND);
     }
     
@@ -40,7 +42,8 @@ public class CustomerController {
     
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Customer>> deleteCustomerById(@PathVariable Long id) {
+    public ResponseEntity<List<Customer>> deleteCustomerById(@PathVariable
+                                                             @Min(value = 1, message = "Invalid id!") Long id) {
         return new ResponseEntity<>(customerServiceFacade.deleteCustomerById(id), HttpStatus.OK);
     }
     

@@ -1,10 +1,10 @@
-package com.example.springApp.service;
+package com.example.springApp.service.customer;
 
 import java.util.List;
 import com.example.springApp.exception.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.springApp.model.Customer;
+import com.example.springApp.domain.Customer;
 import com.example.springApp.repository.CustomerRepository;
 
 @Service
