@@ -21,11 +21,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer createCustomer(Customer customer) {
-       final Optional<CustomerEntity> customerEntityByFirstName = customerRepository.findCustomerByFirstName(customer.getFirstName());
+        final Optional<CustomerEntity> customerEntityByFirstName = customerRepository.findCustomerByFirstName(customer.getFirstName());
 
-       if (customerEntityByFirstName.isPresent()) {
-           return Mappers.getMapper(CustomerMapper.class).mapCustomerEntityToCustomer(customerEntityByFirstName.get());
-       }
+        if (customerEntityByFirstName.isPresent()) {
+            return Mappers.getMapper(CustomerMapper.class).mapCustomerEntityToCustomer(customerEntityByFirstName.get());
+        }
 
         CustomerEntity customerEntity = Mappers.getMapper(CustomerMapper.class).mapCustomerToCustomerEntity(customer);
 
@@ -48,11 +48,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer updateCustomer(Customer customer) {
-        CustomerEntity customerEntity = Mappers.getMapper(CustomerMapper.class).mapCustomerToCustomerEntity(customer);
+        final Optional<CustomerEntity> customerEntityByFirstName = customerRepository.findCustomerByFirstName(customer.getFirstName());
 
-        customerRepository.save(customerEntity);
-        
-        return Mappers.getMapper(CustomerMapper.class).mapCustomerEntityToCustomer(customerRepository.findById(1L).get());
+        if (customerEntityByFirstName.isPresent()) {
+            CustomerEntity customerEntity = Mappers.getMapper(CustomerMapper.class).mapCustomerToCustomerEntity(customer);
+
+            return Mappers.getMapper(CustomerMapper.class).mapCustomerEntityToCustomer(customerRepository.save(customerEntity));
+        }
+
+        throw new CustomerNotFoundException(customer.getFirstName(), customer.getLastName());
     }
     
     @Override
