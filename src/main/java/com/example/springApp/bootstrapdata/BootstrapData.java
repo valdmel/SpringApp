@@ -1,5 +1,6 @@
 package com.example.springApp.bootstrapdata;
 
+import com.example.springApp.domain.Customer;
 import com.example.springApp.dto.CustomerDTO;
 import com.example.springApp.mapper.CustomerMapper;
 import org.mapstruct.factory.Mappers;
@@ -18,17 +19,22 @@ public class BootstrapData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("Loading data...");
 
-        CustomerDTO c1 = CustomerDTO.builder().firstName("Angus").lastName("Young").build();
-        CustomerDTO c2 = CustomerDTO.builder().firstName("Malcolm").lastName("Young").build();
-        CustomerDTO c3 = CustomerDTO.builder().firstName("Cliff").lastName("Williams").build();
-        CustomerDTO c4 = CustomerDTO.builder().firstName("Phil").lastName("Rudd").build();
-        CustomerDTO c5 = CustomerDTO.builder().firstName("Brian").lastName("Johnson").build();
+        Customer c1 = Mappers.getMapper(CustomerMapper.class).mapCustomerDTOToCustomer(
+                CustomerDTO.builder().firstName("Angus").lastName("Young").build());
+        Customer c2 = Mappers.getMapper(CustomerMapper.class).mapCustomerDTOToCustomer(
+                CustomerDTO.builder().firstName("Malcolm").lastName("Young").build());
+        Customer c3 = Mappers.getMapper(CustomerMapper.class).mapCustomerDTOToCustomer(
+                CustomerDTO.builder().firstName("Cliff").lastName("Williams").build());
+        Customer c4 = Mappers.getMapper(CustomerMapper.class).mapCustomerDTOToCustomer(
+                CustomerDTO.builder().firstName("Phil").lastName("Rudd").build());
+        Customer c5 = Mappers.getMapper(CustomerMapper.class).mapCustomerDTOToCustomer(
+                CustomerDTO.builder().firstName("Brian").lastName("Johnson").build());
 
-        customerRepository.save(Mappers.getMapper(CustomerMapper.class).toCustomerEntity(c1));
-        customerRepository.save(Mappers.getMapper(CustomerMapper.class).toCustomerEntity(c2));
-        customerRepository.save(Mappers.getMapper(CustomerMapper.class).toCustomerEntity(c3));
-        customerRepository.save(Mappers.getMapper(CustomerMapper.class).toCustomerEntity(c4));
-        customerRepository.save(Mappers.getMapper(CustomerMapper.class).toCustomerEntity(c5));
+        customerRepository.save(Mappers.getMapper(CustomerMapper.class).mapCustomerToCustomerEntity(c1));
+        customerRepository.save(Mappers.getMapper(CustomerMapper.class).mapCustomerToCustomerEntity(c2));
+        customerRepository.save(Mappers.getMapper(CustomerMapper.class).mapCustomerToCustomerEntity(c3));
+        customerRepository.save(Mappers.getMapper(CustomerMapper.class).mapCustomerToCustomerEntity(c4));
+        customerRepository.save(Mappers.getMapper(CustomerMapper.class).mapCustomerToCustomerEntity(c5));
 
         System.out.println("Number of customers: " + customerRepository.count());
     }

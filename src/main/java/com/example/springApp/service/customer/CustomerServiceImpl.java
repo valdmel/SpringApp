@@ -1,6 +1,9 @@
 package com.example.springApp.service.customer;
 
 import java.util.List;
+import java.util.Optional;
+
+import com.example.springApp.domain.Customer;
 import com.example.springApp.dto.CustomerDTO;
 import com.example.springApp.entity.CustomerEntity;
 import com.example.springApp.exception.CustomerNotFoundException;
@@ -17,46 +20,58 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
 
     @Override
-    public CustomerDTO createCustomer(CustomerEntity customerEntity) {
-        return Mappers.getMapper(CustomerMapper.class).toCustomerDTO(customerRepository.save(customerEntity));
+    public Customer createCustomer(Customer customer) {
+       final Optional<CustomerEntity> customerEntityByFirstName = customerRepository.findCustomerByFirstName(customer.getFirstName());
+
+       if (customerEntityByFirstName.isPresent()) {
+           return Mappers.getMapper(CustomerMapper.class).mapCustomerEntityToCustomer(customerEntityByFirstName.get());
+       }
+
+        CustomerEntity customerEntity = Mappers.getMapper(CustomerMapper.class).mapCustomerToCustomerEntity(customer);
+
+        return Mappers.getMapper(CustomerMapper.class).mapCustomerEntityToCustomer(customerRepository.save(customerEntity));
     }
     
     @Override
-    public CustomerDTO findCustomerById(Long id) {
+    public Customer findCustomerById(Long id) {
         if (customerRepository.existsById(id)) {
-            return Mappers.getMapper(CustomerMapper.class).toCustomerDTO(customerRepository.findById(id).get());
+            return Mappers.getMapper(CustomerMapper.class).mapCustomerEntityToCustomer(customerRepository.findById(id).get());
         }
 
         throw new CustomerNotFoundException(id);
     }
 
     @Override
-    public List<CustomerDTO> findAllCustomers() {
-        return Mappers.getMapper(CustomerMapper.class).toCustomerDTOList(customerRepository.findAll());
+    public List<Customer> findAllCustomers() {
+        return Mappers.getMapper(CustomerMapper.class).mapCustomerEntitiesToCustomers(customerRepository.findAll());
     }
 
     @Override
-    public CustomerDTO updateCustomer(CustomerEntity customerEntity) {
+    public Customer updateCustomer(Customer customer) {
+        CustomerEntity customerEntity = Mappers.getMapper(CustomerMapper.class).mapCustomerToCustomerEntity(customer);
+
         customerRepository.save(customerEntity);
         
-        return Mappers.getMapper(CustomerMapper.class).toCustomerDTO(customerRepository.findById(1L).get());
+        return Mappers.getMapper(CustomerMapper.class).mapCustomerEntityToCustomer(customerRepository.findById(1L).get());
     }
     
     @Override
-    public List<CustomerDTO> deleteCustomerById(Long id) {
+    public List<Customer> deleteCustomerById(Long id) {
         if (customerRepository.existsById(id)) {
             customerRepository.deleteById(id);
 
-            return Mappers.getMapper(CustomerMapper.class).toCustomerDTOList(customerRepository.findAll());
+            return Mappers.getMapper(CustomerMapper.class).mapCustomerEntitiesToCustomers(customerRepository.findAll());
         }
 
         throw new CustomerNotFoundException(id);
     }
 
     @Override
-    public List<CustomerDTO> deleteCustomer(CustomerEntity customerEntity) {
+    public List<Customer> deleteCustomer(Customer customer) {
+        CustomerEntity customerEntity = Mappers.getMapper(CustomerMapper.class).mapCustomerToCustomerEntity(customer);
+
         customerRepository.delete(customerEntity);
         
-        return Mappers.getMapper(CustomerMapper.class).toCustomerDTOList(customerRepository.findAll());
+        return Mappers.getMapper(CustomerMapper.class).mapCustomerEntitiesToCustomers(customerRepository.findAll());
     }
 }
