@@ -1,8 +1,10 @@
-package com.example.springApp.service;
+package com.example.springApp.service.customer;
 
 import java.util.List;
+import com.example.springApp.domain.Customer;
+import com.example.springApp.dto.CustomerDTO;
+import com.example.springApp.entity.CustomerEntity;
 import org.springframework.stereotype.Service;
-import com.example.springApp.model.Customer;
 
 @Service
 public interface CustomerService {
