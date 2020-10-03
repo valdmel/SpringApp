@@ -1,5 +1,6 @@
 package com.example.springApp.entity;
 
+import com.example.springApp.domain.Birthplace;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,4 +16,10 @@ public class CustomerEntity {
 
     private String firstName;
     private String lastName;
+    private Integer age;
+    private String gender;
+    private String nationality;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private BirthplaceEntity birthplace;
 }

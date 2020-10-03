@@ -12,4 +12,8 @@ public class Customer {
     private Long id;
     private String firstName;
     private String lastName;
+    private Integer age;
+    private String gender;
+    private String nationality;
+    private Birthplace birthplace;
 }
