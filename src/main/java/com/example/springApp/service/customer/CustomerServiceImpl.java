@@ -2,9 +2,7 @@ package com.example.springApp.service.customer;
 
 import java.util.List;
 import java.util.Optional;
-
 import com.example.springApp.domain.Customer;
-import com.example.springApp.dto.CustomerDTO;
 import com.example.springApp.entity.CustomerEntity;
 import com.example.springApp.exception.CustomerNotFoundException;
 import com.example.springApp.mapper.CustomerMapper;

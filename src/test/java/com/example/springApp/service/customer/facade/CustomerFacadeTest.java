@@ -64,7 +64,7 @@ class CustomerFacadeTest {
     }
 
     @Test
-    public void shouldCreateAValidCustomer() {
+    public void shouldCreateAnExistingCustomer() {
         when(customerMapper.mapCustomerDTOToCustomer(any())).thenReturn(customer);
         when(customerService.createCustomer(any())).thenReturn(customer);
         when(customerMapper.mapCustomerToCustomerDTO(any())).thenReturn(customerDTO);
@@ -81,7 +81,7 @@ class CustomerFacadeTest {
     }
 
     @Test
-    public void shouldFindACustomerByAValidId() {
+    public void shouldFindByIdAExistingCustomer() {
         when(customerMapper.mapCustomerToCustomerDTO(any())).thenReturn(customerDTO);
         when(customerService.findCustomerById(1L)).thenReturn(customer);
 
@@ -114,7 +114,7 @@ class CustomerFacadeTest {
     }
 
     @Test
-    public void shouldUpdateAValidCustomer() {
+    public void shouldUpdateAnExistingCustomer() {
         when(customerMapper.mapCustomerDTOToCustomer(any())).thenReturn(customer);
         when(customerService.updateCustomer(any())).thenReturn(customer);
         when(customerMapper.mapCustomerToCustomerDTO(any())).thenReturn(customerDTO);
@@ -131,7 +131,7 @@ class CustomerFacadeTest {
     }
 
     @Test
-    public void shouldDeleteACustomerByAValidIdAndTheCustomerListBecomeEmpty() {
+    public void shouldDeleteByIdAnExistingCustomerAndTheCustomerListBecomeEmpty() {
         when(customerMapper.mapCustomersToCustomersDTO(any())).thenReturn(new ArrayList<>());
         when(customerService.deleteCustomerById(1L)).thenReturn(new ArrayList<>());
 
@@ -142,7 +142,7 @@ class CustomerFacadeTest {
     }
 
     @Test
-    public void shouldDeleteACustomerAndTheCustomerListBecomeEmpty() {
+    public void shouldDeleteAnExistingCustomerAndTheCustomerListBecomeEmpty() {
         when(customerMapper.mapCustomerDTOToCustomer(any())).thenReturn(customer);
         when(customerService.deleteCustomer(any())).thenReturn(new ArrayList<>());
         when(customerMapper.mapCustomersToCustomersDTO(any())).thenReturn(new ArrayList<>());
